@@ -1,19 +1,28 @@
 <template>
-  <h1>{{ msg }}</h1>
-  <button @click="count++">count is: {{ count }}</button>
-  <p>Edit <code>components/HelloWorld.vue</code> to test hot module replacement.</p>
+  <div>{{ readersNumber }} {{ book.title }}</div>
 </template>
 
 <script>
+
+
+import { h, ref, reactive } from 'vue';
+import { onMounted, onUpdated, onUnmounted } from 'vue';
+
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  },
-  data() {
-    return {
-      count: 0
-    }
+  setup() {
+    onMounted(() => {
+      console.log('mounted!')
+    })
+    onUpdated(() => {
+      console.log('updated!')
+    })
+    onUnmounted(() => {
+      console.log('unmounted!')
+    })
+    const readersNumber = ref(110)
+    const book = reactive({ title: 'Vue 3 Guide' })
+    // 请注意，我们需要在这里显式地暴露ref值
+    return () => h('div', [readersNumber.value, book.title])
   }
 }
 </script>
